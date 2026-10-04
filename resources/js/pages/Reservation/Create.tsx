@@ -8,6 +8,7 @@ export default function Create(){
         flash: {
             success?: string;
         };
+
     }>().props;
     
     const [showSuccess, setShowSuccess] = useState(false);
