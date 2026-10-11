@@ -3,11 +3,15 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\StudentDashboardController;
 
 Route::inertia('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('/student/dashboard',[StudentDashboardController::class, 'index'])
+        ->name('student.dashboard');
 });
 
 Route::get('/reservation/create', function () {

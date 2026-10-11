@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            
             // for applicant info
             $table->string('name');
             $table->string('department');
@@ -27,7 +30,7 @@ return new class extends Migration
             //for schedule
             $table->date('reserved_date');
             $table->time('time');
-
+            
             //for Requirements
             $table->string('sound_system')->nullable();
             $table->string('microphone')->nullable();
@@ -50,6 +53,9 @@ return new class extends Migration
             //for aproval
             $table->string('applicant_signature')->nullable();
             $table->string('security_signature')->nullable();
+
+            //status
+            $table->string('status')->default('pending');
 
             $table->timestamps();
         });

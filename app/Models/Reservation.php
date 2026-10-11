@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'department',
         'date_applied',
@@ -18,6 +19,8 @@ class Reservation extends Model
 
         'reserved_date',
         'time',
+
+        'status',
 
         'sound_system',
         'microphone',
@@ -36,4 +39,8 @@ class Reservation extends Model
         'applicant_signature',
         'security_signature',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

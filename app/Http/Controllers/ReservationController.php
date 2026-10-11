@@ -11,6 +11,7 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            
             'name' => 'required',
             'department' => 'required',
             'mobileNumber' => 'required',
@@ -21,6 +22,8 @@ class ReservationController extends Controller
         ]);
 
         Reservation::create([
+            'user_id' => auth()->id(),
+
             'name' => $request->name,
             'department' => $request->department,
             'date_applied' => $request->dateApplied,
