@@ -9,12 +9,67 @@
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="min-h-screen bg-gray-100 text-gray-800">
+    @if (session('success'))
+    <div
+        id="success-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center
+               bg-black/50 p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="success-modal-title"
+    >
+        <div class="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
 
-    <div class="min-h-screen flex">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center
+                        justify-center rounded-full bg-green-100">
+                <svg
+                    class="h-9 w-9 text-green-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M5 13l4 4L19 7"
+                    />
+                </svg>
+            </div>
+
+            <h2
+                id="success-modal-title"
+                class="mb-2 text-xl font-bold text-slate-800"
+            >
+                Reservation Submitted!
+            </h2>
+
+            <p class="mb-6 text-sm leading-6 text-slate-600">
+                {{ session('success') }}
+                Please wait for the CPDO office to review your application.
+            </p>
+
+            <button
+                type="button"
+                onclick="document.getElementById('success-modal').remove()"
+                class="w-full rounded-lg bg-blue-600 px-5 py-3
+                       font-semibold text-white transition hover:bg-blue-700
+                       focus:outline-none focus:ring-2 focus:ring-blue-500
+                       focus:ring-offset-2"
+            >
+                Back to Dashboard
+            </button>
+
+        </div>
+    </div>
+@endif
+
+    <div class="flex min-h-screen w-full">
 
         <!-- Sidebar -->
-        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <aside class="flex w-64 shrink-0 flex-col bg-white border-r border-gray-200">
 
             <!-- Logo / System Name -->
             <div class="px-6 py-5 border-b border-gray-200">
@@ -77,7 +132,7 @@
 
 
         <!-- Main Content -->
-        <main class="flex-1">
+        <main class="min-w-0 flex-1">
 
             <!-- Top Bar -->
             <header class="bg-white border-b border-gray-200 px-8 py-5">

@@ -32,8 +32,7 @@ export default function Create(){
     const [microphone, setMicrophone] = useState('');
     const [videoWall, setVideoWall] = useState('');
 
-    const [otherRequrements1, setOtherRequrements1] = useState('');
-    const [otherRequrements2, setOtherRequrements2] = useState('');
+    const [otherRequirements, setOtherRequirements] = useState('');
 
     const [flags, setFlags] = useState('');
     const [podium, setPodium] = useState('');
@@ -43,8 +42,6 @@ export default function Create(){
     const [removalOfRings, setRemovalOfRings] = useState('');
     
     const [agreed, setAgreed] = useState(false);
-    const [applicantsSigniture, setApplicantsSigniture] = useState('');
-    const [securitySigniture, setSecuritySigniture] = useState('');
 
     // Error States
     const [nameError, setNameError] = useState(false);
@@ -56,7 +53,6 @@ export default function Create(){
 
     const [venueError, setVenueError] = useState('');
     const [agreementError, setAgreementError] = useState('');
-    const [signatureError, setSignatureError] = useState('');
     
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,7 +66,6 @@ export default function Create(){
         setTimeError(false);
         setVenueError('');
         setAgreementError('');
-        setSignatureError('');
 
         let hasError = false;
         let firstErrorElement: HTMLElement | null = null;
@@ -131,13 +126,6 @@ export default function Create(){
             hasError = true;
         }
 
-        if (!applicantsSigniture) {
-            setSignatureError('Please provide your signature.');
-            const el = document.getElementById('applicantsSigniture');
-            if (!firstErrorElement) firstErrorElement = el;
-            hasError = true;
-        }
-
         if (hasError && firstErrorElement) {
             firstErrorElement.scrollIntoView({
                 behavior: 'smooth',
@@ -168,11 +156,10 @@ export default function Create(){
             tables,
             chairs,
             removalOfRings,
-            otherRequrements1,
-            otherRequrements2,
+            // Keep the existing backend keys while using one combined field.
+            otherRequrements1: otherRequirements,
+            otherRequrements2: '',
             agreed,
-            applicantsSigniture,
-            securitySigniture,
         });
     };
 
@@ -311,44 +298,63 @@ export default function Create(){
                     </div>
                 </div>
 
-                <div id='venue-section' className='mb-6'>
-                    <h2 className="mb-4 text-2xl font-semibold text-gray-800">Venue/Capacity</h2>
+                <div id="venue-section" className="mb-6">
+                    <h2 className="mb-4 text-2xl font-semibold text-gray-800">
+                        Venue / Capacity
+                    </h2>
 
                     {venueError && (
-                        <div className="mb-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-600 border border-red-200">
+                        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-600">
                             ⚠️ {venueError}
                         </div>
                     )}
 
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        {[
-                            { name: "Campus Gym", label: "UB Cardinals Gym", cap: "2,000 - 2,500 capacity" },
-                            { name: "RCB Dome", label: "RCB Dome", cap: "200 armchairs" },
-                            { name: "FGB Hall", label: "FGB Hall", cap: "150 - 200 capacity" },
-                            { name: "Centenial Hall", label: "Centennial Hall", cap: "100 - 150 capacity" },
-                            { name: "AMS Hall", label: "AMS Hall", cap: "120 armchairs" },
-                            { name: "Legacy", label: "Legacy Multipurpose Hall", cap: "150 - 300 capacity" },
-                            { name: "UB Student Center", label: "UB Student Center", cap: "100 capacity" },
-                            { name: "Alumni AVR", label: "Alumni AVR", cap: "55 capacity" },
-                            { name: "Centennial AVR", label: "Centennial AVR", cap: "35 capacity" },
-                            { name: "Other", label: "Other", cap: "Specify another venue" }
-                        ].map((item) => (
-                            <label key={item.name} className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-300 p-4 hover:bg-gray-50">
-                                <input
-                                    type="radio"
-                                    name="venue"
-                                    value={item.name}
-                                    checked={venue === item.name}
-                                    onChange={(e) => { setVenue(e.target.value); if(venueError) setVenueError(''); }}
-                                    className="h-4 w-4"
-                                />
-                                <span>
-                                    <span className="font-medium">{item.label}</span>
-                                    <span className="block text-sm text-gray-500">{item.cap}</span>
-                                </span>
+                    <label htmlFor="venue" className="mb-2 block text-sm font-medium text-gray-700">
+                        Select a venue
+                    </label>
+
+                    <select
+                        id="venue"
+                        name="venue"
+                        value={venue}
+                        onChange={(e) => {
+                            setVenue(e.target.value);
+                            if (venueError) setVenueError('');
+                        }}
+                        className={`w-full rounded-lg border bg-white px-4 py-3 outline-none transition ${
+                            venueError
+                                ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                                : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
+                        }`}
+                    >
+                        <option value="">Choose a venue...</option>
+                        <option value="Campus Gym">UB Cardinals Gym — 2,000–2,500 capacity</option>
+                        <option value="RCB Dome">RCB Dome — 200 armchairs</option>
+                        <option value="FGB Hall">FGB Hall — 150–200 capacity</option>
+                        <option value="Centenial Hall">Centennial Hall — 100–150 capacity</option>
+                        <option value="AMS Hall">AMS Hall — 120 armchairs</option>
+                        <option value="Legacy">Legacy Multipurpose Hall — 150–300 capacity</option>
+                        <option value="UB Student Center">UB Student Center — 100 capacity</option>
+                        <option value="Alumni AVR">Alumni AVR — 55 capacity</option>
+                        <option value="Centennial AVR">Centennial AVR — 35 capacity</option>
+                        <option value="Other">Other — Specify another venue</option>
+                    </select>
+
+                    {venue === 'Other' && (
+                        <div className="mt-4">
+                            <label htmlFor="otherVenue" className="mb-2 block text-sm font-medium text-gray-700">
+                                Specify other venue
                             </label>
-                        ))}
-                    </div>
+                            <input
+                                id="otherVenue"
+                                type="text"
+                                value={otherVenue}
+                                onChange={(e) => setOtherVenue(e.target.value)}
+                                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                                placeholder="Enter the venue name"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <h2 className="mb-6 text-2xl font-semibold text-gray-800">Reserve Date(s)</h2>
@@ -443,17 +449,24 @@ export default function Create(){
                     </div>
 
                     <div>
-                        <h3 className="mb-4 text-lg font-semibold text-gray-800">Others, please specify</h3>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <div>
-                                <label className="mb-2 block text-sm font-medium text-gray-700">Other Requirement 1</label>
-                                <input type="text" value={otherRequrements1} onChange={(e) => setOtherRequrements1(e.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" placeholder="Specify requirement" />
-                            </div>
-                            <div>
-                                <label className="mb-2 block text-sm font-medium text-gray-700">Other Requirement 2</label>
-                                <input type="text" value={otherRequrements2} onChange={(e) => setOtherRequrements2(e.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" placeholder="Specify requirement" />
-                            </div>
-                        </div>
+                        <h3 className="mb-4 text-lg font-semibold text-gray-800">
+                            Other Requirements
+                        </h3>
+                        <label htmlFor="otherRequirements" className="mb-2 block text-sm font-medium text-gray-700">
+                            Additional requirements (optional)
+                        </label>
+                        <textarea
+                            id="otherRequirements"
+                            value={otherRequirements}
+                            onChange={(e) => setOtherRequirements(e.target.value)}
+                            rows={4}
+                            maxLength={2000}
+                            className="w-full resize-y rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            placeholder="Describe any additional equipment, setup, or other requirements..."
+                        />
+                        <p className="mt-1 text-xs text-gray-500">
+                            Include any extra details not covered by the fields above.
+                        </p>
                     </div>
                 </div>
 
@@ -510,55 +523,6 @@ export default function Create(){
                             />
                             <span>I have read and agree to the terms and conditions.</span>
                         </label>
-                    </div>
-                </div>
-
-                {/* Approval */}
-                <div className="mt-8 border-t pt-8">
-                    <h2 className="mb-6 text-2xl font-bold text-gray-900">
-                        Approval
-                    </h2>
-
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        {/* Applicant */}
-                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-5">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                                Applicant
-                            </h3>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
-                                Signature over printed name
-                            </label>
-                            <input
-                                id="applicantsSigniture"
-                                type="text"
-                                value={applicantsSigniture}
-                                onChange={(e) => { setApplicantsSigniture(e.target.value); if(signatureError) setSignatureError(''); }}
-                                className={`w-full rounded-lg border bg-white px-4 py-2.5 outline-none transition ${
-                                    signatureError 
-                                        ? 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200' 
-                                        : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
-                                }`}
-                                placeholder={signatureError ? "Please fill up your signature" : "Enter signature name"}
-                            />
-                            {signatureError && <p className="mt-1 text-xs text-red-600">{signatureError}</p>}
-                        </div>
-
-                        {/* Security Personnel */}
-                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-5">
-                            <h3 className="mb-4 text-lg font-semibold text-gray-800">
-                                Security Personnel
-                            </h3>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
-                                Signature over printed name
-                            </label>
-                            <input
-                                type="text"
-                                value={securitySigniture}
-                                onChange={(e) => setSecuritySigniture(e.target.value)}
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                                placeholder="Enter signature name"
-                            />
-                        </div>
                     </div>
                 </div>
 

@@ -56,7 +56,8 @@ class ReservationController extends Controller
             'security_signature' => $request->securitySigniture,
         ]);
 
-        return redirect('/reservation/create')
-            ->with('success', 'Reservation Submitted successfully!');
-    }
+       return redirect()
+        ->route('student.dashboard')
+        ->with('success', 'Reservation submitted successfully!');
+        }
 }
