@@ -35,14 +35,28 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        \Log::info('Login validation error diagnostic', [
+            'method' => $request->method(),
+            'url' => $request->path(),
+            'has_session' => $request->hasSession(),
+            'has_errors' => $request->hasSession()
+                && $request->session()->has('errors'),
+            'errors' => $request->hasSession()
+                ? $request->session()->get('errors')?->getBag('default')->messages()
+                : [],
+        ]);
         return [
             ...parent::share($request),
+    
             'name' => config('app.name'),
+    
             'auth' => [
                 'user' => $request->user(),
             ],
+    
             'sidebarOpen' => ! $request->hasCookie('sidebar_state')
                 || $request->cookie('sidebar_state') === 'true',
+    
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
             ],

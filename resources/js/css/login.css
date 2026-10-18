@@ -1,0 +1,261 @@
+
+/* =========================
+   Login page layout
+   ========================= */
+
+html,
+body,
+#app {
+    min-height: 100%;
+    margin: 0;
+}
+
+.login-page {
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(59, 130, 246, 0.2),
+            transparent 35%
+        ),
+        #0f172a;
+    color: #0f172a;
+}
+.login-page > .login-container {
+    width: 100%;
+    max-width: 440px;
+    margin: auto;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+/* =========================
+   Branding
+   ========================= */
+
+.login-heading {
+    margin-bottom: 28px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.login-logo {
+    display: flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    border-radius: 16px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+}
+
+.login-heading h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.login-heading p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+/* =========================
+   Login card
+   ========================= */
+
+.login-card {
+    padding: 32px;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+}
+
+.login-card-title {
+    margin: 0 0 6px;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.login-card-description {
+    margin: 0 0 26px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* =========================
+   Login form
+   ========================= */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-field {
+    display: grid;
+    gap: 8px;
+}
+
+.login-field input {
+    min-height: 44px;
+    border-radius: 9px;
+}
+
+.login-password-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.login-password-heading a {
+    font-size: 13px;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-submit {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 4px;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-weight: 650;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.login-submit:hover {
+    background: #1d4ed8;
+}
+
+.login-submit:active {
+    transform: scale(0.99);
+}
+
+/* =========================
+   Google login
+   ========================= */
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.login-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    font: inherit;
+}
+
+.login-google:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.login-google-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* =========================
+   Registration and messages
+   ========================= */
+
+.login-signup {
+    margin-top: 24px;
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.login-signup a {
+    color: #2563eb;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.login-signup a:hover {
+    text-decoration: underline;
+}
+
+.login-status {
+    margin-bottom: 16px;
+    color: #15803d;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-footer {
+    margin-top: 24px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 12px;
+}
+.login-error {
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+/* =========================
+   Responsive design
+   ========================= */
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 24px 16px;
+    }
+
+    .login-card {
+        padding: 24px 20px;
+    }
+
+    .login-heading h1 {
+        font-size: 25px;
+    }
+}

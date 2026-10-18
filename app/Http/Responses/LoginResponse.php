@@ -11,6 +11,13 @@ class LoginResponse implements LoginResponseContract
    public function toResponse($request)
     {
         $user = $request->user();
+
+\Log::info('Login role diagnostic', [
+    'user_id' => $user?->id,
+    'email' => $user?->email,
+    'role' => $user?->getRawOriginal('role'),
+    'guard' => auth()->getDefaultDriver(),
+]);
     
         \Log::info('Custom login response reached', [
             'user_id' => $user?->id,
